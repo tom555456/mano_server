@@ -19,9 +19,6 @@ const getData = async (req) => {
         rows: []
     }
     
-    // let [r1] = "";
-    // if (itemCategoryId) [r1] = await db.query(`SELECT COUNT(1) num FROM items WHERE itemCategoryId = ${itemCategoryId}`);
-    // else [r1] = await db.query("SELECT COUNT(1) num FROM items ");
     let [r1] = "";
     if (catIds) [r1] = await db.query(`SELECT COUNT(1) num FROM items INNER JOIN category ON items.itemCategoryId = category.categoryId WHERE items.itemCategoryId in (${catIds})`);
     else [r1] = await db.query('SELECT COUNT(1) num FROM items INNER JOIN category ON items.itemCategoryId = category.categoryId');
@@ -36,22 +33,14 @@ const getData = async (req) => {
         return res.json(output);
     }
 
-    // const sql = `SELECT * FROM items WHERE itemCategoryId = ${itemCategoryId} LIMIT ${(page-1) * perPage}, ${perPage}`;
-    // const sql2 = `SELECT * FROM items LIMIT ${(page-1) * perPage}, ${perPage}`;
     const sql3 = `SELECT * FROM items INNER JOIN category ON items.itemCategoryId = category.categoryId WHERE items.itemCategoryId in (${catIds}) LIMIT ${(page-1) * perPage}, ${perPage}`;
     const sql4 = `SELECT * FROM items INNER JOIN category ON items.itemCategoryId = category.categoryId LIMIT ${(page-1) * perPage}, ${perPage}`;
     
-    // let [r2] = "";
-    // if (itemCategoryId) [r2] = await db.query(sql);    
-    // else [r2] = await db.query(sql2);
     let [r2] = "";
     if (catIds) [r2] = await db.query(sql3); 
     else [r2] = await db.query(sql4);
 
     if(r2) output.rows = r2;
-    // for(let i of r2) {
-    //     i.birthday = moment(i.birthday).format("YYYY-MM-DD");
-    // }
     return output;
 }
 
@@ -69,10 +58,5 @@ router.get("/:cartIds?/:page?", async (req, res) => {
 })
 
 
-// router.get("/:itemCategoryId?/:page?", async (req, res) => {
-//     const output = await getData(req); 
-//     res.json(output);
-
-// })
 
 module.exports = router;
