@@ -35,6 +35,7 @@ app.use('/items', require(__dirname+'/items'))
 app.use('/category', require(__dirname+'/category'))
 app.use('/cscategory', require(__dirname+'/cscategory'))
 app.use('/courses', require(__dirname+'/courses'))
+app.use('/order', require(__dirname+'/order'))
 app.use('/membercenter', require(__dirname+'/membercenter'))
 //相當於const membercenter = require(__dirname+'/membercenter')//再把變數放上面
 
