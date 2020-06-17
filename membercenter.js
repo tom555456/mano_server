@@ -19,16 +19,40 @@ router.get('/list',(req,res)=>{
 
 //修改會員資料
 router.put('/edit',(req,res)=>{
-    const sql ="UPDATE `member` \
-    SET `memberName`="+JSON.stringify(req.body.memberName)+",\
-    `paymentCity`="+JSON.stringify(req.body.paymentCity)+",\
-    `phone`="+JSON.stringify(req.body.phone)+",\
-    `email`="+JSON.stringify(req.body.email)+",\
-    `shipAddress`="+JSON.stringify(req.body.shipAddress)+",\
-    `memberImg`="+JSON.stringify(req.body.memberImg)+" \
-    WHERE `memberid` =  "+JSON.stringify(req.body.memberId)
+    // console.log(req.body)
+    const sql =`UPDATE member \
+    SET memberName="${req.body.memberName}",\
+    paymentCity="${req.body.paymentCity}",\
+    paymentDistrict="${req.body.paymentDistrict}",\
+    phone="${req.body.phone}",\
+    email="${req.body.email}",\
+    shipAddress="${req.body.shipAddress}",\
+    memberImg="${req.body.memberImg}" ,\
+    pwd="${req.body.pwd}" \
+    WHERE memberid = "${req.body.memberId}"`
     db.query(sql)
         .then(res.send(sql))
+})
+//上傳圖片名稱到SQL
+router.put('/upimg',  (req, res)=>{
+    const sql =`UPDATE member \
+    SET \
+    memberImg="${req.body.memberImg}" \
+    WHERE memberid =  "${req.body.memberId}"`
+    db.query(sql)
+        .then(res.send(sql))
+    //測試postman
+    // console.log(req.file)
+    // res.send('ok')
+})
+
+//顯示折價券資料
+router.get('/coupon',(req,res)=>{
+    // res.send('ok')
+    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='M002'AND rel_coupon_member.discountID=marketing.discountID`)
+        .then(([rows])=>{
+            res.json(rows);
+        })
 })
 
 

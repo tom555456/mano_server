@@ -5,7 +5,7 @@ const upload = require(__dirname + "/upload-module")
 
 
 const getData = async (req) => {
-    let parentId = parseInt(req.params.parentId) || 0;
+    let parentId = parseInt(req.params.parentId) || 2;
 
     const output = {
         rows: []

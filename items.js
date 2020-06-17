@@ -8,17 +8,28 @@ const getData = async (req) => {
     let page = parseInt(req.params.page) || 1;
     let itemCategoryId = parseInt(req.params.itemCategoryId) || null;
     let catIds = (req.params.cartIds) || "";
+    let itemId = (req.params.itemId) || "";
 
     const output = {
         catIds: catIds,
+        itemId: itemId,
         itemCategoryId: itemCategoryId,
         page: page,
         perPage: perPage,
         totalRows: 0,
         totalPages: 0,
-        rows: []
+        rows: [],
+        allData: []
     }
     
+
+    //const [r1] = await db.query(`SELECT COUNT(1) num FROM items`);
+    let [r0] = "";
+    const sql = `SELECT * FROM items INNER JOIN category ON items.itemCategoryId  = category.categoryId `;
+    [r0] = await db.query(sql);
+    if(r0) output.allData = r0;
+
+
     let [r1] = "";
     if (catIds) [r1] = await db.query(`SELECT COUNT(1) num FROM items INNER JOIN category ON items.itemCategoryId = category.categoryId WHERE items.itemCategoryId in (${catIds})`);
     else [r1] = await db.query('SELECT COUNT(1) num FROM items INNER JOIN category ON items.itemCategoryId = category.categoryId');

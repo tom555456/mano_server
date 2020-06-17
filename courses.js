@@ -8,10 +8,12 @@ const getData = async (req) => {
     let page = parseInt(req.params.page) || 1;
     let courseCategoryId = parseInt(req.params.courseCategoryId) || null;
     let catIds = (req.params.catIds) || "";
+    let courseId = (req.params.courseId) || "";
     // let parentId = (req.params.parentId) || "";
 
     const output = {
         catIds: catIds,
+        courseId: courseId,
         // parentId: parentId,
         courseCategoryId: courseCategoryId,
         page: page,
@@ -22,18 +24,36 @@ const getData = async (req) => {
         allData: []
     }
     
+    
     // let [r1] = "";
     // if (itemCategoryId) [r1] = await db.query(`SELECT COUNT(1) num FROM items WHERE itemCategoryId = ${itemCategoryId}`);
     // else [r1] = await db.query("SELECT COUNT(1) num FROM items ");
     let [r1] = "";
-    if (catIds)[r1] = await db.query(`SELECT COUNT(1) num FROM course 
-    INNER JOIN rel_course_cat ON rel_course_cat.courseId = course.courseId
-    INNER JOIN category ON category.categoryId = rel_course_cat.categoryId
-    WHERE rel_course_cat.categoryId = ${catIds}`);
-    else [r1] = await db.query('SELECT COUNT(1) num FROM course INNER JOIN category ON course.courseCategoryId = category.categoryId');
+    // if (catIds)[r1] = await db.query(`SELECT COUNT(1) num FROM course 
+    // INNER JOIN rel_course_cat ON rel_course_cat.courseId = course.courseId
+    // INNER JOIN category ON category.categoryId = rel_course_cat.categoryId
+    // WHERE rel_course_cat.categoryId = ${catIds}`);
+    // else [r1] = await db.query('SELECT COUNT(1) num FROM course INNER JOIN category ON course.courseCategoryId = category.categoryId');
+    
+    if (catIds) {
+
+        if (catIds == 26) {
+            [r1] = await db.query('SELECT COUNT(1) num FROM course INNER JOIN category ON course.courseCategoryId = category.categoryId');
+         }else {
+            [r1] = await db.query(`SELECT COUNT(1) num FROM course 
+            INNER JOIN rel_course_cat ON rel_course_cat.courseId = course.courseId
+            INNER JOIN category ON category.categoryId = rel_course_cat.categoryId
+            WHERE rel_course_cat.categoryId = ${catIds}`);
+            
+            }
+
+   } else {
+    [r1] = await db.query('SELECT COUNT(1) num FROM course INNER JOIN category ON course.courseCategoryId = category.categoryId');
+        }
+    
     //const [r1] = await db.query(`SELECT COUNT(1) num FROM course`);
     let [r0] = "";
-    const sql = `SELECT * FROM course INNER JOIN category ON course.courseCategoryId = category.categoryId `;
+    const sql = `SELECT * FROM course INNER JOIN category ON course.courseCategoryId  = category.categoryId `;
     [r0] = await db.query(sql);
     if(r0) output.allData = r0;
     
@@ -57,12 +77,30 @@ const getData = async (req) => {
     INNER JOIN category ON category.categoryId = rel_course_cat.categoryId
     WHERE rel_course_cat.categoryId = ${catIds} LIMIT ${(page-1) * perPage}, ${perPage}`
 
+    //const sql5 = `SELECT * FROM course WHERE course.courseId = ${courseId}`;
+
+    
+   
     // let [r2] = "";
     // if (itemCategoryId) [r2] = await db.query(sql);    
     // else [r2] = await db.query(sql2);
-    let [r2] = "";
-    if (catIds) [r2] = await db.query(sql3); 
-    else [r2] = await db.query(sql4);
+    // let [r2] = "";
+    // if (catIds) [r2] = await db.query(sql3); 
+    // else [r2] = await db.query(sql4);
+
+    if (catIds) {
+
+        if (catIds == 26) {
+         [r2] = await db.query(sql4)
+         }else {
+        [r2] = await db.query(sql3)
+            }
+
+    }else {
+            [r2] = await db.query(sql4)
+        }
+
+    
     
 
     // let [r3] = "";
@@ -71,7 +109,8 @@ const getData = async (req) => {
     // for(let i of r2) {
     //     i.birthday = moment(i.birthday).format("YYYY-MM-DD");
     // }
-    if(r2) output.rows = r2;
+    if(r2) output.rows = r2 ;
+    
    
     return output;
     
@@ -89,6 +128,14 @@ router.get("/:catIds?/:page?", async (req, res) => {
     res.json(output);
 
 })
+
+// router.get("/courseDetail/:courseId?",(req, res) => {
+//     db.query(`SELECT * FROM course WHERE course.courseId = ${courseId}`)
+//     .then(([output])=>{
+//         res.json(output);
+//     })
+
+// })
 
 
 
