@@ -81,8 +81,33 @@ router.post('/insertOrderPayment', upload.none(), (req, res)=>{
 
 });
 
+router.get('/shopCoupon/:memberId',(req,res)=>{
 
+    let memberId = req.params.memberId || "";
+    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='${memberId}' AND rel_coupon_member.discountID=marketing.discountID WHERE categoryType = '通用' OR categoryType = '商城'`)
+        .then(([rows])=>{
+            res.json(rows);
+        })
+})
 
+router.get('/courseCoupon/:memberId',(req,res)=>{
+
+    let memberId = req.params.memberId || "";
+    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='${memberId}' AND rel_coupon_member.discountID=marketing.discountID WHERE categoryType = '通用' OR categoryType = '課程'`)
+        .then(([rows])=>{
+            res.json(rows);
+        })
+})
+
+router.get('/member/:id',(req,res)=>{
+
+    let id = parseInt(req.params.id) || 1;
+
+    db.query(`SELECT * FROM member WHERE id = ${id}`)
+        .then(([rows])=>{
+            res.json(rows);
+        })
+})
 
 
 module.exports = router;
