@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 18, 2020 at 10:19 PM
+-- Generation Time: Jun 20, 2020 at 03:26 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -348,7 +348,7 @@ CREATE TABLE `item_tracking` (
   `id` int(11) NOT NULL COMMENT '流水號',
   `username` varchar(50) NOT NULL COMMENT '使用者帳號',
   `itemId` int(11) NOT NULL COMMENT '商品編號',
-  `msg` varchar(255) NOT NULL COMMENT '訊息',
+  `itemPrice` int(5) NOT NULL COMMENT '商品價錢',
   `created_at` datetime NOT NULL DEFAULT current_timestamp() COMMENT '新增時間',
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '修改時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -357,17 +357,16 @@ CREATE TABLE `item_tracking` (
 -- Dumping data for table `item_tracking`
 --
 
-INSERT INTO `item_tracking` (`id`, `username`, `itemId`, `msg`, `created_at`, `updated_at`) VALUES
-(5, '施Alice', 1, '', '2020-04-29 09:48:54', '2020-04-29 09:48:54'),
-(6, '施Alice', 39, '', '2020-04-29 09:50:42', '2020-04-29 09:50:42'),
-(7, '施Alice', 70, '', '2020-04-30 13:30:19', '2020-04-30 13:30:19'),
-(8, '施Alice', 136, '', '2020-04-30 13:32:04', '2020-04-30 13:32:04'),
-(9, '施Alice', 10, '', '2020-04-30 13:34:29', '2020-04-30 13:34:29'),
-(10, '施Alice', 161, '', '2020-04-30 13:35:56', '2020-04-30 13:35:56'),
-(12, 'cindyyy', 138, '中秋節特賣', '2020-04-30 18:21:58', '2020-05-05 14:41:09'),
-(13, 'cindyyy', 74, '', '2020-04-30 18:22:10', '2020-04-30 18:22:10'),
-(15, 'tom', 1, '', '2020-05-03 19:38:25', '2020-05-03 19:38:25'),
-(16, 'tom', 4, '', '2020-05-03 21:45:54', '2020-05-03 21:45:54');
+INSERT INTO `item_tracking` (`id`, `username`, `itemId`, `itemPrice`, `created_at`, `updated_at`) VALUES
+(80, '施Alice', 88, 650, '2020-06-19 20:07:23', '2020-06-19 20:07:23'),
+(81, '施Alice', 3, 650, '2020-06-19 20:11:31', '2020-06-19 20:11:31'),
+(82, '施Alice', 4, 850, '2020-06-19 20:11:33', '2020-06-19 20:11:33'),
+(83, '施Alice', 3, 650, '2020-06-19 20:17:51', '2020-06-19 20:17:51'),
+(84, '施Alice', 90, 700, '2020-06-19 20:18:46', '2020-06-19 20:18:46'),
+(85, '施Alice', 3, 650, '2020-06-19 20:23:52', '2020-06-19 20:23:52'),
+(86, '施Alice', 100, 700, '2020-06-19 20:24:19', '2020-06-19 20:24:19'),
+(87, '施Alice', 4, 850, '2020-06-19 20:27:37', '2020-06-19 20:27:37'),
+(88, '施Alice', 161, 1100, '2020-06-19 20:39:07', '2020-06-19 20:39:07');
 
 -- --------------------------------------------------------
 
@@ -584,6 +583,7 @@ CREATE TABLE `rel_coupon_member` (
   `rel_coupon_member_id` int(100) NOT NULL COMMENT '流水號',
   `memberId` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `discountID` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `use_times` int(20) NOT NULL DEFAULT 0,
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -592,19 +592,19 @@ CREATE TABLE `rel_coupon_member` (
 -- Dumping data for table `rel_coupon_member`
 --
 
-INSERT INTO `rel_coupon_member` (`rel_coupon_member_id`, `memberId`, `discountID`, `updated_at`, `created_at`) VALUES
-(1, 'M002', 'D307', '2020-06-15 23:22:55', '2020-06-15 23:20:44'),
-(2, 'M003', 'D307', '2020-06-15 23:20:44', '2020-06-15 23:20:44'),
-(3, 'M005', 'D311', '2020-06-15 23:23:56', '2020-06-15 23:20:44'),
-(4, 'M007', 'D100', '2020-06-15 23:20:44', '2020-06-15 23:20:44'),
-(5, 'M021', 'D311', '2020-06-15 23:23:59', '2020-06-15 23:20:44'),
-(6, 'M001', 'D003', '2020-06-15 23:20:44', '2020-06-15 23:20:44'),
-(7, 'M002', 'D004', '2020-06-15 23:23:25', '2020-06-15 23:20:44'),
-(8, 'M003', 'D006', '2020-06-15 23:24:16', '2020-06-15 23:20:44'),
-(9, 'M001', 'D311', '2020-06-15 23:24:03', '2020-06-15 23:20:44'),
-(10, 'M002', 'D100', '2020-06-15 23:20:44', '2020-06-15 23:20:44'),
-(11, 'M003', 'D311', '2020-06-15 23:24:06', '2020-06-15 23:20:44'),
-(12, 'M033', 'D003', '2020-06-15 23:20:44', '2020-06-15 23:20:44');
+INSERT INTO `rel_coupon_member` (`rel_coupon_member_id`, `memberId`, `discountID`, `use_times`, `updated_at`, `created_at`) VALUES
+(1, 'M002', 'D307', 0, '2020-06-15 23:22:55', '2020-06-15 23:20:44'),
+(2, 'M003', 'D307', 0, '2020-06-15 23:20:44', '2020-06-15 23:20:44'),
+(3, 'M005', 'D311', 0, '2020-06-15 23:23:56', '2020-06-15 23:20:44'),
+(4, 'M007', 'D100', 0, '2020-06-15 23:20:44', '2020-06-15 23:20:44'),
+(5, 'M021', 'D311', 0, '2020-06-15 23:23:59', '2020-06-15 23:20:44'),
+(6, 'M001', 'D003', 0, '2020-06-15 23:20:44', '2020-06-15 23:20:44'),
+(7, 'M002', 'D004', 0, '2020-06-15 23:23:25', '2020-06-15 23:20:44'),
+(8, 'M003', 'D006', 0, '2020-06-15 23:24:16', '2020-06-15 23:20:44'),
+(9, 'M001', 'D311', 0, '2020-06-15 23:24:03', '2020-06-15 23:20:44'),
+(10, 'M002', 'D100', 0, '2020-06-15 23:20:44', '2020-06-15 23:20:44'),
+(11, 'M003', 'D311', 0, '2020-06-15 23:24:06', '2020-06-15 23:20:44'),
+(12, 'M033', 'D003', 0, '2020-06-15 23:20:44', '2020-06-15 23:20:44');
 
 -- --------------------------------------------------------
 
@@ -983,7 +983,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `item_tracking`
 --
 ALTER TABLE `item_tracking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `marketing`
@@ -1001,19 +1001,19 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT COMMENT '訂單編號', AUTO_INCREMENT=92;
+  MODIFY `orderId` int(5) NOT NULL AUTO_INCREMENT COMMENT '訂單編號', AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `order_lists`
 --
 ALTER TABLE `order_lists`
-  MODIFY `orderListId` int(10) NOT NULL AUTO_INCREMENT COMMENT '明細編碼', AUTO_INCREMENT=96;
+  MODIFY `orderListId` int(10) NOT NULL AUTO_INCREMENT COMMENT '明細編碼', AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `order_payment`
 --
 ALTER TABLE `order_payment`
-  MODIFY `orderPaymentId` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `orderPaymentId` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `rel_coupon_member`

@@ -55,19 +55,31 @@ router.get('/coupon',(req,res)=>{
         })
 })
 
+//真正存圖片
+router.post('/try-upload2', upload.single('avatar'), (req, res)=>{
+    res.json({
+        filename:req.file.filename,  
+        body:req.body
+    })
+    //測試postman
+    console.log(req.file)
+    // res.send('ok')
+})
+
+
 
 //以下的目前沒用到
-router.get("/:memberid?/:main?", async (req, res) => {
-    const output = await getData(req); 
-    res.json(output);
+// router.get("/:memberid?/:main?", async (req, res) => {
+//     const output = await getData(req); 
+//     res.json(output);
 
-})
+// })
 
-router.get("/:memberid?/:coupon?", async (req, res) => {
-    const output = await getData(req); 
-    res.json(output);
+// router.get("/:memberid?/:coupon?", async (req, res) => {
+//     const output = await getData(req); 
+//     res.json(output);
 
-})
+// })
 
 module.exports = router;
 
