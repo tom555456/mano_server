@@ -9,9 +9,10 @@ router.get('/',(req,res)=>{
 })
 
 //顯示會員資料
-router.get('/list',(req,res)=>{
+router.get('/list/:memberId?',(req,res)=>{
+    const memberId = req.params.memberId || ''
     // res.send('ok')
-    db.query("SELECT * FROM `member` WHERE `memberid` = 'M002'")
+    db.query(`SELECT * FROM member WHERE memberid = '${memberId}'`)
         .then(([rows])=>{
             res.json(rows);
         })
@@ -33,6 +34,10 @@ router.put('/edit',(req,res)=>{
     db.query(sql)
         .then(res.send(sql))
 })
+
+
+
+
 //上傳圖片名稱到SQL
 router.put('/upimg',  (req, res)=>{
     const sql =`UPDATE member \
@@ -47,9 +52,22 @@ router.put('/upimg',  (req, res)=>{
 })
 
 //顯示折價券資料
-router.get('/coupon',(req,res)=>{
+router.get('/coupon/:memberId?',(req,res)=>{
+    const memberId = req.params.memberId || ''
     // res.send('ok')
-    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='M002'AND rel_coupon_member.discountID=marketing.discountID`)
+    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='${memberId}'AND rel_coupon_member.discountID=marketing.discountID AND use_times < 1  
+    ORDER BY rel_coupon_member.created_at  DESC`)
+        .then(([rows])=>{
+            res.json(rows);
+        })
+})
+
+//顯示用過的折價券資料
+router.get('/couponused/:memberId?',(req,res)=>{
+    const memberId = req.params.memberId || ''
+    // res.send('ok')
+    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='${memberId}'AND rel_coupon_member.discountID=marketing.discountID AND use_times > 1  
+    ORDER BY rel_coupon_member.created_at  DESC`)
         .then(([rows])=>{
             res.json(rows);
         })
@@ -67,6 +85,55 @@ router.post('/try-upload2', upload.single('avatar'), (req, res)=>{
 })
 
 
+//顯示會員訂單
+router.get('/memberorder/:memberId?/:page?',(req,res)=>{
+    const memberId = req.params.memberId || ''
+    const page = parseInt(req.params.page) || 1
+    const showFirst = page * 5 - 5 
+    const showLast = page * 5
+    // res.send('ok')
+    db.query(`SELECT * FROM orders WHERE memberid = '${memberId}' ORDER BY created_at  DESC LIMIT ${showFirst},${showLast} `)
+        .then(([rows])=>{
+            res.json(rows);
+        })
+})
+//顯示會員訂單-筆數
+router.get('/memberorderpage/:memberId?',(req,res)=>{
+    const memberId = req.params.memberId || ''
+    // res.send('ok')
+    db.query(`SELECT COUNT(1) AS page FROM orders WHERE memberid = '${memberId}'`)
+        .then(([rows])=>{
+            const finalpage = Math.ceil(rows[0].page / 5) 
+            const arr =[]
+            for (let i = 1; i <= finalpage; i++) {
+                arr.push(i)
+            }
+            res.json(arr)
+        })
+        // .then(([rows])=>{
+        //     res.json(rows);
+        // })
+})
+
+
+//顯示詳細訂單-商品篇
+router.get('/memberorderdetail/:orderId?',(req,res)=>{
+    const orderId = req.params.orderId || ''
+    // res.send('ok')
+    db.query(`SELECT * FROM order_lists INNER JOIN orders ON order_lists.orderId=orders.orderId INNER JOIN items ON order_lists.itemId=items.itemId WHERE orders.orderId ='${orderId}'`)
+        .then(([rows])=>{
+            res.json(rows);
+        })
+})
+//顯示詳細訂單-課程篇
+router.get('/memberordercoursedetail/:orderId?',(req,res)=>{
+    const orderId = req.params.orderId || ''
+    // res.send('ok')
+    db.query(`SELECT * FROM order_lists INNER JOIN orders ON order_lists.orderId=orders.orderId INNER JOIN course ON order_lists.courseId=course.courseId WHERE orders.orderId ='${orderId}'`)
+        .then(([rows])=>{
+            res.json(rows);
+        })
+})
 
 //以下的目前沒用到
 // router.get("/:memberid?/:main?", async (req, res) => {
@@ -82,4 +149,3 @@ router.post('/try-upload2', upload.single('avatar'), (req, res)=>{
 // })
 
 module.exports = router;
-
