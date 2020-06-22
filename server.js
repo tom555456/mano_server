@@ -11,6 +11,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false })); 
 // parse application/json 
 app.use(express.json());
+app.use(express.static('public'))
 
 const whitelist = [undefined, 'http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000']
 const corsOptions = {
@@ -25,6 +26,7 @@ const corsOptions = {
     }
 };
 app.use(cors(corsOptions));
+
 
 // simple route
 app.get("/", (req, res) => {
