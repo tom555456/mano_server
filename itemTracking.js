@@ -15,7 +15,8 @@ const getData = async (req) => {
     const sql = `SELECT items.itemId,items.shippingId, items.itemName, items.itemImg, items.itemPrice, items.itemQty, items.itemCategoryId, items.created_at, items.updated_at,item_tracking.id AS itemTrackingId,item_tracking.username AS username, item_tracking.created_at, item_tracking.updated_at FROM items INNER JOIN item_tracking ON items.itemId = item_tracking.itemId WHERE item_tracking.username = '施Alice'`;
     
     // 之後要補用使用者名字抓取 WHERE username = '${username}'
-
+    
+    
     const [r1] = await db.query(sql);    
     if(r1) {
         output.rows = r1;
