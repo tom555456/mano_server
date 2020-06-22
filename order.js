@@ -109,5 +109,15 @@ router.get('/member/:id',(req,res)=>{
         })
 })
 
+router.put('/discountUse',(req,res)=>{
+    // console.log(req.body)
+    const sql =`UPDATE rel_coupon_member \
+    SET use_times = use_times + 1 \
+    WHERE rel_coupon_member_id = ${req.body.relCouponId}`
+    db.query(sql)
+        .then(res.send(sql))
+})
+
+
 
 module.exports = router;
