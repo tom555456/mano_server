@@ -95,7 +95,7 @@ router.get('/shopCoupon/:memberId',(req,res)=>{
 router.get('/courseCoupon/:memberId',(req,res)=>{
 
     let memberId = req.params.memberId || "";
-    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='${memberId}' AND rel_coupon_member.discountID=marketing.discountID WHERE categoryType = '通用' OR categoryType = '課程'`)
+    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='${memberId}' AND rel_coupon_member.discountID=marketing.discountID WHERE categoryType = '通用' OR categoryType = '課程' `)
         .then(([rows])=>{
             res.json(rows);
         })
