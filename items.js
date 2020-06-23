@@ -4,7 +4,7 @@ const router = express.Router();
 const upload = require(__dirname + "/upload-module")
 
 const getData = async (req) => {
-    const perPage = 10;
+    const perPage = 5;
     let page = parseInt(req.params.page) || 1;
     let itemCategoryId = parseInt(req.params.itemCategoryId) || null;
     let catIds = (req.params.cartIds) || "";

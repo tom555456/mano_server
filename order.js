@@ -35,7 +35,9 @@ router.post('/insertOrder', upload.none(), (req,res)=>{
         success: false
     }
     const sql = "INSERT INTO orders set ?";
-
+    //req.body.created_at = +new Date()
+    req.body.created_at = new Date(new Date().getTime() + 28800000);
+    //console.log(new Date(new Date().getTime() + 28800000))
     db.query(sql, [req.body])
         .then(([r])=>{
             output.results = r;

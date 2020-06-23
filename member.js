@@ -2,6 +2,8 @@ const express = require('express');
 const db = require(__dirname + "/db-connect");
 const router = express.Router(); 
 const upload = require(__dirname + "/upload-module")
+require('dotenv').config();
+const nodemailer = require("nodemailer")
 
 
 const getData = async (req) => {
@@ -39,6 +41,42 @@ router.post('/insertMember', upload.none(), (req,res)=>{
             res.json(output)
         })
 })
+
+
+router.post("/sendGmail", async (req, res) => {
+
+    const email = req.body.email
+
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        secure: true,
+        auth: {
+          type: "OAuth2",
+          user: process.env.ACCOUNT,
+          clientId: process.env.CLINENTID,
+          clientSecret: process.env.CLINENTSECRET,
+          refreshToken: process.env.REFRESHTOKEN,
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+      });
+
+      var mailOptions = {
+        from: '"Mano抹茶選物社群平台" <0126cloud@gmail.com>',
+        to: email,
+        subject: "重新設定您的密碼 From:Mano抹茶選物社群平台",
+        html: "<p>信件發送成功</p>",
+      };
+
+      // 準備發送信件
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+          return console.log(err);
+        }
+      });
+})
+
 
 
 
