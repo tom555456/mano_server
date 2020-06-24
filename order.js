@@ -166,6 +166,49 @@ router.put('/discountUse',(req,res)=>{
         .then(res.send(sql))
 })
 
+router.post("/sendGmail", async (req, res) => {
+
+    const email = req.body.email
+
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        secure: true,
+        auth: {
+          type: "OAuth2",
+          user: process.env.ACCOUNT,
+          clientId: process.env.CLINENTID,
+          clientSecret: process.env.CLINENTSECRET,
+          refreshToken: process.env.REFRESHTOKEN,
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+      });
+
+      var mailOptions = {
+        from: '"Mano抹茶選物社群平台" <0126cloud@gmail.com>',
+        to: email,
+        subject: "重新設定您的密碼 From:Mano抹茶選物社群平台",
+        html: `<div>
+        <img src='cid:unique@kreata.ee' alt=''>
+        <p>信件發送成功</p>
+        </div>`,
+        attachments: [{
+          filename: 'm.jpg',
+          path: __dirname + '/public/m.jpg',
+          cid: 'unique@kreata.ee'
+      }]
+      };
+
+      // 準備發送信件
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+          return console.log(err);
+        }
+      });
+})
+
+
 
 
 module.exports = router;

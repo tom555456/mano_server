@@ -66,7 +66,12 @@ router.post("/sendGmail", async (req, res) => {
         from: '"Mano抹茶選物社群平台" <0126cloud@gmail.com>',
         to: email,
         subject: "重新設定您的密碼 From:Mano抹茶選物社群平台",
-        html: "<p>信件發送成功</p>",
+        html: `<div><img src='cid:unique@kreata.ee' alt=''><p>信件發送成功</p></div>`,
+        attachments: [{
+          filename: 'm.jpg',
+          path: __dirname + '/public/m.jpg',
+          cid: 'unique@kreata.ee'
+      }]
       };
 
       // 準備發送信件
