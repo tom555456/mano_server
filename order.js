@@ -35,15 +35,34 @@ router.post('/insertOrder', upload.none(), (req,res)=>{
         success: false
     }
     const sql = "INSERT INTO orders set ?";
-
-    db.query(sql, [req.body])
+    //req.body.created_at = +new Date()
+    req.body.item.created_at = new Date(new Date().getTime() + 28800000);
+    //console.log(new Date(new Date().getTime() + 28800000))
+    db.query(sql, [req.body.item])
         .then(([r])=>{
             output.results = r;
             if(r.affectedRows && r.insertId){
                 output.success = true;
+
+                const sql2 = "INSERT INTO order_lists set ?";
+
+                for(let i =0; i < req.body.item2.length; i++) {
+
+                    req.body.item2[i].orderId = r.insertId;
+                    db.query(sql2, [req.body.item2[i]])
+                        .then(([r])=>{
+                            output.results = r;
+                            if(r.affectedRows && r.insertId){
+                                output.success = true;
+                            }
+                            res.json(output)
+                        })
+                }
+                
             }
-            res.json(output)
+        
         })
+
 })
 
 router.post('/insertOrderList', upload.none(), (req,res)=>{
@@ -68,15 +87,44 @@ router.post('/insertOrderPayment', upload.none(), (req, res)=>{
     const output = {
         success: false
     }
-    const sql = "INSERT INTO order_payment set ?";
 
-    db.query(sql, [req.body])
+    const sql = "INSERT INTO orders set ?";
+    //req.body.created_at = +new Date()
+    req.body.item.created_at = new Date(new Date().getTime() + 28800000);
+    //console.log(new Date(new Date().getTime() + 28800000))
+    db.query(sql, [req.body.item])
         .then(([r])=>{
             output.results = r;
             if(r.affectedRows && r.insertId){
                 output.success = true;
+
+                const sql2 = "INSERT INTO order_lists set ?";
+
+                for(let i =0; i < req.body.item2.length; i++) {
+
+                    req.body.item2[i].orderId = r.insertId;
+                    db.query(sql2, [req.body.item2[i]])
+                        .then(([r])=>{
+                            output.results = r;
+                            if(r.affectedRows && r.insertId){
+                                output.success = true;
+                            }
+                        })
+                }
+
+                const sql3 = "INSERT INTO order_payment set ?";
+                
+                req.body.item3.orderId = r.insertId;
+                db.query(sql3, [req.body.item3])
+                    .then(([r])=>{
+                        output.results = r;
+                        if(r.affectedRows && r.insertId){
+                            output.success = true;
+                        }
+                        res.json(output)
+                    })   
             }
-            res.json(output)
+        
         })
 
 });
@@ -93,7 +141,7 @@ router.get('/shopCoupon/:memberId',(req,res)=>{
 router.get('/courseCoupon/:memberId',(req,res)=>{
 
     let memberId = req.params.memberId || "";
-    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='${memberId}' AND rel_coupon_member.discountID=marketing.discountID WHERE categoryType = '通用' OR categoryType = '課程'`)
+    db.query(`SELECT * FROM rel_coupon_member INNER JOIN marketing ON rel_coupon_member.memberId ='${memberId}' AND rel_coupon_member.discountID=marketing.discountID WHERE categoryType = '通用' OR categoryType = '課程' `)
         .then(([rows])=>{
             res.json(rows);
         })
