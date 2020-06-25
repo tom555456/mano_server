@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 24, 2020 at 10:56 PM
+-- Generation Time: Jun 25, 2020 at 12:02 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -108,21 +108,30 @@ CREATE TABLE `comment` (
   `id` bigint(255) NOT NULL,
   `username` varchar(250) NOT NULL,
   `text` varchar(400) NOT NULL,
-  `edited` tinyint(1) NOT NULL DEFAULT 0
+  `edited` tinyint(1) NOT NULL DEFAULT 0,
+  `completed` tinyint(1) NOT NULL,
+  `heart` int(11) NOT NULL,
+  `parentReply` int(11) DEFAULT NULL,
+  `commentImg` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `comment`
 --
 
-INSERT INTO `comment` (`cid`, `id`, `username`, `text`, `edited`) VALUES
-(1, 1592388369338, 'M009', 'hello', 0),
-(2, 1592388540580, 'M002', '你好', 0),
-(5, 1592388857735, 'M002', 'hey', 0),
-(8, 1592390258112, 'M009', 'hey', 1),
-(39, 1592635329088, 'M009', 'eee', 0),
-(40, 1592635338165, 'd', '000', 0),
-(41, 1592635498412, 'M009', 'rtyu', 0);
+INSERT INTO `comment` (`cid`, `id`, `username`, `text`, `edited`, `completed`, `heart`, `parentReply`, `commentImg`) VALUES
+(1, 1592388369338, 'M009', 'hello', 0, 1, 1, NULL, ''),
+(2, 1592388540580, 'M002', '你好', 0, 1, 1, NULL, ''),
+(5, 1592388857735, 'M002', 'hey', 1, 1, 0, NULL, ''),
+(56, 1592892570905, 'Liz', 'chia', 0, 0, 1, 5, ''),
+(75, 1592984667450, 'M009', 'moo0', 0, 1, 0, NULL, 'cake3.jpg'),
+(76, 1592986144575, 'M009', 'liz', 0, 0, 0, NULL, 'C:\\fakepath\\cake1.jpg'),
+(77, 1592986485677, 'M009', 'M009', 0, 0, 0, NULL, 'C:\\fakepath\\24530_322283322970_7268060_n.jpg'),
+(78, 1592987456448, '00', 'll', 0, 0, 0, NULL, 'C:\\fakepath\\cake2.jpg'),
+(79, 1592988199983, 'M009', 'Moo9', 0, 0, 0, NULL, 'C:\\fakepath\\cake1.jpg'),
+(80, 1592988768043, 'M009', 'M009', 0, 0, 0, NULL, 'C:\\fakepath\\cake3.jpg'),
+(81, 1592989713978, 'M009', 'Moo9', 0, 0, 0, NULL, 'cake4.jpg'),
+(87, 1593058014316, 'nnn', 'mmm', 0, 0, 0, NULL, '20200503094037.jpg');
 
 -- --------------------------------------------------------
 
@@ -1024,7 +1033,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `course`

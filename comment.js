@@ -83,13 +83,22 @@ router.post('/',upload.none(),(req, res) => {
         res.json(output);
      })
 });
-// router.post('/',upload.none(),(req, res) => {
-//     const sql = "INSERT INTO comment SET ?";
-//     db.query(sql,[req.body])
-//     .then(([rows])=>{
-//         res.json(rows);
-//    })
-// });
+// router.put('/upimg',  (req, res)=>{
+//     const sql =`UPDATE comment \
+//     SET \
+//     commentImg="${req.body.commentImg}" \
+//     WHERE cid =  "${req.body.cid}"`
+//     db.query(sql)
+//         .then(res.send(sql))
+router.post('/try-upload2', upload.single('avatar'), (req, res)=>{
+    res.json({
+        filename:req.file.filename,  
+        body:req.body
+    })
+    //測試postman
+    console.log(req.file)
+})
+
 router.put('/:id?', upload.none(), (req, res)=>{
     const output = {
         success: false,
@@ -128,6 +137,8 @@ router.delete('/:id', (req, res)=>{
         res.json(output);
     })
 });
+
+
 
 
     
