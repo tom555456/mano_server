@@ -92,7 +92,7 @@ router.get('/memberorder/:memberId?/:page?',(req,res)=>{
     const showFirst = page * 5 - 5 
     const showLast = page * 5
     // res.send('ok')
-    db.query(`SELECT * FROM orders WHERE memberid = '${memberId}' ORDER BY created_at  DESC LIMIT ${showFirst},${showLast} `)
+    db.query(`SELECT * FROM order_lists INNER JOIN orders ON orders.memberId ='${memberId}'AND order_lists.orderId=orders.orderId ORDER BY paymentDate  DESC LIMIT ${showFirst},${showLast} `)
         .then(([rows])=>{
             res.json(rows);
         })
