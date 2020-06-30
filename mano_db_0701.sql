@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 28, 2020 at 02:21 PM
+-- Generation Time: Jun 30, 2020 at 08:02 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -178,6 +178,18 @@ INSERT INTO `course` (`courseId`, `courseName`, `courseDesc`, `courseCategoryId`
 (14, '防疫限定！抹茶香皂DIY', '防疫限定!!親子手工皂DIY，讓您與孩子一起學習、共同創作美的事物', '32', '0', 500, 'CS014-1.jpg', 'CS014-2.jpg', '2020-06-11', 'NTP', 'T001', '0', '2020-05-11', '2020-04-23 20:43:02', '2020-06-14 19:33:56', '0', '0', '0', 50),
 (15, '防疫限定！抹茶營養學', '抹茶營養學課程，教你正確的營養學觀念，兒茶素被認為有抗癌和預防心臟病、糖尿病效果。', '32', '0', 500, 'CS015-1.jpg', 'CS015-2.jpg', '2020-07-07', 'TPE', 'T005', '0', '2020-04-22', '2020-04-23 20:43:02', '2020-06-12 09:21:35', '0', '0', '0', 50),
 (16, '抹茶居家佈置', '打造清爽空間讓居家布置，透過對家飾家俱認識與各式軟材搭配，呈現居家空間氛圍。', '29', '0', 5000, 'CS016-1.jpg', 'CS016-2.jpg', '2020-07-20', 'TPE', 'T006', '0', '2020-07-01', '2020-04-23 20:43:02', '2020-06-12 09:20:48', '0', '0', '0', 50);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forget_password`
+--
+
+CREATE TABLE `forget_password` (
+  `fId` int(30) NOT NULL,
+  `fUrl` bigint(255) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -389,11 +401,8 @@ CREATE TABLE `item_tracking` (
 --
 
 INSERT INTO `item_tracking` (`id`, `username`, `itemId`, `itemPrice`, `created_at`, `updated_at`) VALUES
-(80, '施Alice', 88, 650, '2020-06-19 20:07:23', '2020-06-19 20:07:23'),
-(81, '施Alice', 3, 650, '2020-06-19 20:11:31', '2020-06-19 20:11:31'),
-(82, '施Alice', 4, 850, '2020-06-19 20:11:33', '2020-06-19 20:11:33'),
-(93, '施Alice', 3, 650, '2020-06-22 00:08:20', '2020-06-22 00:08:20'),
-(94, '施Alice', 3, 650, '2020-06-22 00:11:29', '2020-06-22 00:11:29');
+(94, '施Alice', 3, 650, '2020-06-22 00:11:29', '2020-06-22 00:11:29'),
+(97, '陳辛蒂', 3, 650, '2020-07-01 01:48:20', '2020-07-01 01:48:20');
 
 -- --------------------------------------------------------
 
@@ -469,7 +478,7 @@ INSERT INTO `member` (`id`, `memberId`, `memberName`, `class`, `paymentAddress`,
 (19, 'M007', '沈湯瑪', '手摘', '中正路', '屏東市', '潮州鎮', 548, '0957575757', 'baccano1622@gmail.com', '5f50a84c1fa3bcff146405017f36aec1a10a9e38', 'master', '南港路大尾巷99段1號', '2019-12-06 00:37:09', '20200503093920.jpg', '2020-04-22 14:00:56', '2020-06-25 03:08:45'),
 (20, 'M008', '賈荔枝', '二番茶', '興南路', '南投縣', '埔里鎮', 148, '0966666666', 'midory0cc@gmail.com', 'acbe9eefed1b5c30f6a12777bf7fe46911b40d2c', '第三方支付', '中正路三段77巷2號', '2019-12-06 00:37:09', '20200503093932.jpg', '2020-04-22 14:06:05', '2020-06-25 03:08:02'),
 (21, 'M009', '蔡肯尼', '二番茶', '北新路', '高雄市', '鳳山區', 0, '0977777777', 'kennyk3721@gmail.com', '1bb8649a5ca2388333c2c19ae84b380b9c8efe0a', '貨到付款', '大安路57號', '2019-12-06 00:37:09', '20200503093952.jpg', '2020-04-27 14:02:47', '2020-06-25 02:54:20'),
-(23, 'M010', '陳辛蒂', '手摘', '和平東路', '南投縣', '埔里鎮', 878, '0987778788', '0126cloud@gmail.com', '08419f95f54ba7772a69a52ce1114111bf996b10', '貨到付款', '大有路一段93號', '2020-04-29 00:00:00', '1593015497494.jpg', '2020-04-29 12:11:57', '2020-06-25 00:18:20'),
+(23, 'M010', '陳辛蒂', '手摘', '和平東路', '南投縣', '埔里鎮', 878, '0987778788', '0126cloud@gmail.com', '768393aea7fef8c37a6df9ff7c3a9c230a55a9fe', '貨到付款', '大有路一段93號', '2020-04-29 00:00:00', '1593015497494.jpg', '2020-04-29 12:11:57', '2020-07-01 00:21:44'),
 (30, 'M011', '王咪子', '手摘', '仁愛路', '台北市', '大安區', 106, '0988555666', 'i22062@hotmail.com', 'cd3844fd77c2354d6700e309ce29b25ab102b0e4', '', '大安路57號', '2020-05-01 12:07:10', '20200503094015.jpg', '2020-05-01 12:07:10', '2020-06-25 03:09:01'),
 (31, 'M012', 'tom', '', '', '', NULL, 0, '', '000@gmail.com', 'f6bb3d35d4da6ba775c281fcb602de5bc431451a', '', '', '2020-05-03 19:35:34', '20200506105341.jpg', '2020-05-03 19:35:34', '2020-06-17 04:57:52');
 
@@ -980,6 +989,12 @@ ALTER TABLE `course`
   ADD PRIMARY KEY (`courseId`);
 
 --
+-- Indexes for table `forget_password`
+--
+ALTER TABLE `forget_password`
+  ADD PRIMARY KEY (`fId`);
+
+--
 -- Indexes for table `items`
 --
 ALTER TABLE `items`
@@ -1074,6 +1089,12 @@ ALTER TABLE `course`
   MODIFY `courseId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT for table `forget_password`
+--
+ALTER TABLE `forget_password`
+  MODIFY `fId` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
@@ -1083,7 +1104,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `item_tracking`
 --
 ALTER TABLE `item_tracking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=95;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `marketing`

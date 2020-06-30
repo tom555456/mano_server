@@ -92,7 +92,19 @@ router.get('/memberorder/:memberId?/:page?',(req,res)=>{
     const showFirst = page * 5 - 5 
     const showLast = page * 5
     // res.send('ok')
-    db.query(`SELECT * FROM order_lists INNER JOIN orders ON orders.memberId ='${memberId}'AND order_lists.orderId=orders.orderId ORDER BY paymentDate  DESC LIMIT ${showFirst},${showLast} `)
+    db.query(`SELECT * FROM orders WHERE orders.memberId ='${memberId}' ORDER BY created_at  DESC LIMIT ${showFirst},${showLast} `)
+        .then(([rows])=>{
+            res.json(rows);
+        })
+})
+//丟訂單進去搜尋內容
+router.get('/memberorderSearch/:memberId?',(req,res)=>{
+    const memberId = req.params.memberId || ''
+    const page = parseInt(req.params.page) || 1
+    const showFirst = page * 5 - 5 
+    const showLast = page * 5
+    // res.send('ok')
+    db.query(`SELECT * FROM order_lists INNER JOIN orders ON orders.memberId ='${memberId}'AND order_lists.orderId=orders.orderId ORDER BY paymentDate  DESC `)
         .then(([rows])=>{
             res.json(rows);
         })
