@@ -41,6 +41,7 @@ app.use('/courses', require(__dirname+'/courses'))
 app.use('/order', require(__dirname+'/order'))
 app.use('/member', require(__dirname+'/member'))
 app.use('/comment',require(__dirname+'/comment'))
+app.use('/story',require(__dirname+'/story'))
 app.use('/itemTracking',require(__dirname+'/itemTracking'))
 app.use('/mallpagehome',require(__dirname+'/mallpagehome'))
 
