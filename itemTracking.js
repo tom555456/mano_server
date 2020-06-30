@@ -36,16 +36,17 @@ router.get("/:username?", async (req, res) => {
 // 新增願望清單資料
 router.post("/add", async (req, res) => {
     const sql = `INSERT INTO item_tracking (username,itemId,itemPrice) VALUES
-     (${req.body.username},${req.body.itemId},${req.body.itemPrice})`
+     ('${req.body.username}',${req.body.itemId},${req.body.itemPrice})`
     db.query(sql)
         .then(res.send(sql))
     })
 
 // 刪除願望清單資料
 router.delete("/del", async (req, res) => {
-    const sql = `DELETE FROM item_tracking WHERE username = ${req.body.username}
+    const sql = `DELETE FROM item_tracking WHERE username = '${req.body.username}'
     AND itemId = ${req.body.itemId}`;
     
+    // ${req.body.username}
     db.query(sql)
         .then(res.send(sql))
 })
