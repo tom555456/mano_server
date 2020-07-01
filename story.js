@@ -24,7 +24,7 @@ const router = express.Router();
 // })
 
 const getDatastory= async (req)=>{
-    const perPage=10;
+    const perPage=50;
     let page = parseInt(req.params.page) || 1;
     const output ={
         perPage: perPage,
